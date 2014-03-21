@@ -5,14 +5,14 @@
 //  Copyright (c) 2012 Apigee. All rights reserved.
 //
 
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CoreTelephony/CTCarrier.h>
+//#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+//#import <CoreTelephony/CTCarrier.h>
 
 #import "NSString+UUID.h"
 #import "NSDate+Apigee.h"
 #import "ApigeeOpenUDID.h"
-#import "ApigeeReachability.h"
-#import "ApigeeLocationService.h"
+//#import "ApigeeReachability.h"
+//#import "ApigeeLocationService.h"
 #import "ApigeeSessionMetricsCompiler.h"
 #import "UIDevice+Apigee.h"
 #import "ApigeeMonitoringClient.h"
@@ -56,7 +56,7 @@
         instance.networkChanged = NO;
         [instance createSession:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:instance selector: @selector(networkChanged:) name:kReachabilityChangedNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:instance selector: @selector(networkChanged:) name:kReachabilityChangedNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:instance selector:@selector(createSession:) name:UIApplicationWillEnterForegroundNotification object:nil];
     });
     
@@ -88,27 +88,27 @@
     
     BOOL isCapturingCarrierInfo = NO;
 
-    if (!isWiFi) {
-        
-        CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-        CTCarrier *carrier = [networkInfo subscriberCellularProvider];
-
-        if( carrier && ([carrier.carrierName length] > 0) )
-        {
-            //NSString *mcc = [carrier mobileCountryCode];
-            if( settings.networkCarrierCaptureEnabled && !isWiFi )
-            {
-                isCapturingCarrierInfo = YES;
-                metrics.networkCarrier = carrier.carrierName;
-                metrics.networkCountry = carrier.isoCountryCode;
-            }
-
-            // Until we figure out what we want to do here...
-            //metrics.deviceCountry = [locale displayNameForKey:NSLocaleCountryCode value:mcc];
-            metrics.deviceCountry = kValueUnkown;
-        }
-    }
-    
+//    if (!isWiFi) {
+//        
+//        CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+//        CTCarrier *carrier = [networkInfo subscriberCellularProvider];
+//
+//        if( carrier && ([carrier.carrierName length] > 0) )
+//        {
+//            //NSString *mcc = [carrier mobileCountryCode];
+//            if( settings.networkCarrierCaptureEnabled && !isWiFi )
+//            {
+//                isCapturingCarrierInfo = YES;
+//                metrics.networkCarrier = carrier.carrierName;
+//                metrics.networkCountry = carrier.isoCountryCode;
+//            }
+//
+//            // Until we figure out what we want to do here...
+//            //metrics.deviceCountry = [locale displayNameForKey:NSLocaleCountryCode value:mcc];
+//            metrics.deviceCountry = kValueUnkown;
+//        }
+//    }
+   
     if (!isCapturingCarrierInfo)
     {
         metrics.networkCarrier = kValueUnkown;
@@ -119,25 +119,25 @@
     metrics.networkType = isWiFi ? @"WIFI" : @"MOBILE";
     metrics.networkSubType = kValueUnkown;
     
-    if (settings.locationCaptureEnabled) {
-#if !(TARGET_IPHONE_SIMULATOR)
-        CLLocation *location = [ApigeeLocationService defaultService].location;
-        if (location) {
-            metrics.latitude = [NSString stringWithFormat:@"%f",  location.coordinate.latitude];
-            metrics.longitude = [NSString stringWithFormat:@"%f",  location.coordinate.longitude];
-            metrics.bearing = [NSString stringWithFormat:@"%f",  location.course];
-        } else {
-            metrics.latitude = @"0.0";
-            metrics.longitude = @"0.0";
-            metrics.bearing = @"0.0";
-        }
-#else
-        metrics.latitude = @"0.0";
-        metrics.longitude = @"0.0";
-        metrics.bearing = @"0.0";
-#endif
-    }
-    
+//    if (settings.locationCaptureEnabled) {
+//#if !(TARGET_IPHONE_SIMULATOR)
+//        CLLocation *location = [ApigeeLocationService defaultService].location;
+//        if (location) {
+//            metrics.latitude = [NSString stringWithFormat:@"%f",  location.coordinate.latitude];
+//            metrics.longitude = [NSString stringWithFormat:@"%f",  location.coordinate.longitude];
+//            metrics.bearing = [NSString stringWithFormat:@"%f",  location.course];
+//        } else {
+//            metrics.latitude = @"0.0";
+//            metrics.longitude = @"0.0";
+//            metrics.bearing = @"0.0";
+//        }
+//#else
+//        metrics.latitude = @"0.0";
+//        metrics.longitude = @"0.0";
+//        metrics.bearing = @"0.0";
+//#endif
+//    }
+   
     NSString *countryCode = [locale objectForKey: NSLocaleCountryCode];
     NSString *countryName = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
 

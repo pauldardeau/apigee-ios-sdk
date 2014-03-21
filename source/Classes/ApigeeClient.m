@@ -7,7 +7,7 @@
 
 #import "ApigeeClient.h"
 #import "ApigeeAppIdentification.h"
-#import "ApigeeDataClient.h"
+//#import "ApigeeDataClient.h"
 #import "ApigeeMonitoringClient.h"
 #import "ApigeeMonitoringOptions.h"
 #import "ApigeeDefaultiOSLog.h"
@@ -15,12 +15,12 @@
 /*!
  @version 2.0.10
  */
-static NSString* kSDKVersion = @"2.0.10";
+static NSString* kSDKVersion = @"2.0.10.c";
 
 
 @interface ApigeeClient ()
 
-@property (strong, nonatomic) ApigeeDataClient* dataClient;
+//@property (strong, nonatomic) ApigeeDataClient* dataClient;
 @property (strong, nonatomic) ApigeeMonitoringClient* monitoringClient;
 @property (strong, nonatomic) ApigeeAppIdentification* appIdentification;
 
@@ -29,7 +29,7 @@ static NSString* kSDKVersion = @"2.0.10";
 
 @implementation ApigeeClient
 
-@synthesize dataClient;
+//@synthesize dataClient;
 @synthesize monitoringClient;
 @synthesize appIdentification;
 
@@ -52,6 +52,18 @@ static NSString* kSDKVersion = @"2.0.10";
                                 baseURL:baseURL
                                urlTerms:nil
                                 options:nil];
+}
+
+- (id)initWithOrganizationId:(NSString*)organizationId
+               applicationId:(NSString*)applicationId
+                     baseURL:(NSString*)baseURL
+                     options:(ApigeeMonitoringOptions*)monitoringOptions
+{
+   return [self initWithOrganizationId:organizationId
+                         applicationId:applicationId
+                               baseURL:baseURL
+                              urlTerms:nil
+                               options:monitoringOptions];
 }
 
 - (id)initWithOrganizationId:(NSString*)organizationId
@@ -93,30 +105,28 @@ static NSString* kSDKVersion = @"2.0.10";
         if( [baseURL length] > 0 ) {
             self.appIdentification.baseURL = baseURL;
         } else {
-            self.appIdentification.baseURL = [ApigeeDataClient defaultBaseURL];
+            self.appIdentification.baseURL = @"https://api.usergrid.com";
         }
         
 
-        self.dataClient = [[ApigeeDataClient alloc] initWithOrganizationId:organizationId
-                                                             withApplicationID:applicationId
-                                                                       baseURL:baseURL
-                                                                       urlTerms:urlTerms];
-        
-        if( self.dataClient ) {
-            NSLog( @"apigee: dataClient created" );
-            
+//        self.dataClient = [[ApigeeDataClient alloc] initWithOrganizationId:organizationId
+//                                                             withApplicationID:applicationId
+//                                                                       baseURL:baseURL
+//                                                                       urlTerms:urlTerms];
+//        
+//        if( self.dataClient ) {
+//            NSLog( @"apigee: dataClient created" );
+       
             if( monitoringOptions != nil ) {
                 if( monitoringOptions.monitoringEnabled ) {
                     self.monitoringClient = [[ApigeeMonitoringClient alloc] initWithAppIdentification:self.appIdentification
-                                                                                       dataClient:self.dataClient
                                                                                           options:monitoringOptions];
                 } else {
                     self.monitoringClient = nil;
                 }
             } else {
                 self.monitoringClient =
-                    [[ApigeeMonitoringClient alloc] initWithAppIdentification:self.appIdentification
-                                                                   dataClient:self.dataClient];
+                    [[ApigeeMonitoringClient alloc] initWithAppIdentification:self.appIdentification];
             }
             
             if( self.monitoringClient ) {
@@ -126,12 +136,12 @@ static NSString* kSDKVersion = @"2.0.10";
                     NSLog( @"apigee: unable to create monitoringClient" );
                 }
             }
-        } else {
-            NSLog( @"apigee: unable to create dataClient" );
-            NSLog( @"apigee: no monitoringClient will be created" );
-        }
-        
-        [ApigeeDataClient setLogger:[[ApigeeDefaultiOSLog alloc] init]];
+//        } else {
+//            NSLog( @"apigee: unable to create dataClient" );
+//            NSLog( @"apigee: no monitoringClient will be created" );
+//        }
+       
+        //[ApigeeDataClient setLogger:[[ApigeeDefaultiOSLog alloc] init]];
     }
     
     return self;

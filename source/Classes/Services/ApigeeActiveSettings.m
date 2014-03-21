@@ -5,8 +5,8 @@
 //  Copyright (c) 2012 Apigee. All rights reserved.
 //
 
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CoreTelephony/CTCarrier.h>
+//#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+//#import <CoreTelephony/CTCarrier.h>
 
 #import "NSArray+ApigeeConfigFilters.h"
 #import "ApigeeOpenUDID.h"
@@ -30,7 +30,7 @@
 @implementation ApigeeActiveSettings
 
 @synthesize config;
-@synthesize activeNetworkStatus;
+//@synthesize activeNetworkStatus;
 
 #pragma mark - Memory management
 
@@ -198,24 +198,24 @@
         }
     }
     
-    BOOL empty = [self.config.devicePlatformRegexFilters isEmpty] &&
-    [self.config.networkTypeRegexFilters isEmpty] &&
-    [self.config.networkOperatorRegexFilters isEmpty] &&
-    [self.config.deviceModelRegexFilters isEmpty];
-    
-    if (self.config.deviceTypeOverrideEnabled && !empty) {
-        CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-        CTCarrier *carrier = [networkInfo subscriberCellularProvider];
-                    
-        if ([self.config.devicePlatformRegexFilters containsPlatform:[[UIDevice currentDevice] systemName]] &&
-            [self.config.deviceModelRegexFilters containsDeviceModel:[[UIDevice currentDevice] model]] &&
-            [self.config.networkTypeRegexFilters containsNetworkSpeed:self.activeNetworkStatus] &&
-            [self.config.networkOperatorRegexFilters containsCarrier:carrier.carrierName]) {
-                             
-            return kApigeeDeviceType;
-        }
-    }
-    
+//    BOOL empty = [self.config.devicePlatformRegexFilters isEmpty] &&
+//    [self.config.networkTypeRegexFilters isEmpty] &&
+//    [self.config.networkOperatorRegexFilters isEmpty] &&
+//    [self.config.deviceModelRegexFilters isEmpty];
+//    
+//    if (self.config.deviceTypeOverrideEnabled && !empty) {
+//        CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+//        CTCarrier *carrier = [networkInfo subscriberCellularProvider];
+//                    
+//        if ([self.config.devicePlatformRegexFilters containsPlatform:[[UIDevice currentDevice] systemName]] &&
+//            [self.config.deviceModelRegexFilters containsDeviceModel:[[UIDevice currentDevice] model]] &&
+//            [self.config.networkTypeRegexFilters containsNetworkSpeed:self.activeNetworkStatus] &&
+//            [self.config.networkOperatorRegexFilters containsCarrier:carrier.carrierName]) {
+//                             
+//            return kApigeeDeviceType;
+//        }
+//    }
+   
     if (self.config.ABTestingOverrideEnabled) {
         
         //coin flip for ab testing config application

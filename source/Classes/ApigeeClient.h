@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 @class ApigeeAppIdentification;
-@class ApigeeDataClient;
+//@class ApigeeDataClient;
 @class ApigeeMonitoringClient;
 @class ApigeeMonitoringOptions;
 
@@ -92,7 +92,7 @@
  @see ApigeeDataClient ApigeeDataClient
  @return the ApigeeDataClient instance that was initialized
  */
-- (ApigeeDataClient*)dataClient;
+//- (ApigeeDataClient*)dataClient;
 
 /*!
  @abstract Retrieves the Apigee app monitoring client

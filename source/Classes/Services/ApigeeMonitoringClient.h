@@ -6,10 +6,10 @@
 
 #import "ApigeeActiveSettings.h"
 #import "ApigeeUploadListener.h"
-#import "ApigeeUIEventListener.h"
+//#import "ApigeeUIEventListener.h"
 
 @class ApigeeAppIdentification;
-@class ApigeeDataClient;
+//@class ApigeeDataClient;
 @class ApigeeMonitoringOptions;
 @class ApigeeNSURLSessionDataTaskInfo;
 @class ApigeeNetworkEntry;
@@ -18,7 +18,7 @@
  @class ApigeeMonitoringClient
  @abstract Top-level class for interfacing with app monitoring functionality
  */
-@interface ApigeeMonitoringClient : NSObject<ApigeeUIEventListener>
+@interface ApigeeMonitoringClient : NSObject //<ApigeeUIEventListener>
 
 /*!
  @property apigeeDeviceId
@@ -53,8 +53,7 @@
  @param dataClient the data client object initialized by Apigee SDK
  @return initialized instance of ApigeeMonitoringClient
  */
-- (id) initWithAppIdentification:(ApigeeAppIdentification*)appIdentification
-                      dataClient:(ApigeeDataClient*)dataClient;
+- (id) initWithAppIdentification:(ApigeeAppIdentification*)appIdentification;
 
 /*!
  @abstract Initializes ApigeeMonitoringClient which controls the Apigee mobile agent.
@@ -65,7 +64,6 @@
  @see ApigeeMonitoringOptions ApigeeMonitoringOptions
  */
 - (id) initWithAppIdentification:(ApigeeAppIdentification*)appIdentification
-                      dataClient:(ApigeeDataClient*)dataClient
                          options:(ApigeeMonitoringOptions*)monitoringOptions;
 
 /*!
@@ -78,7 +76,6 @@
  @return initialized instance of ApigeeMonitoringClient
  */
 - (id) initWithAppIdentification: (ApigeeAppIdentification*) appIdentification
-                      dataClient: (ApigeeDataClient*) dataClient
                   crashReporting: (BOOL) crashReportingEnabled __attribute__ ((deprecated));
 
 /*!
@@ -93,7 +90,6 @@
  @return initialized instance of ApigeeMonitoringClient
  */
 - (id) initWithAppIdentification: (ApigeeAppIdentification*) appIdentification
-                      dataClient: (ApigeeDataClient*) dataClient
                   crashReporting: (BOOL) crashReportingEnabled
            interceptNetworkCalls: (BOOL) autoInterceptCalls __attribute__ ((deprecated));
 
@@ -110,7 +106,6 @@
  @return initialized instance of ApigeeMonitoringClient
  */
 - (id) initWithAppIdentification: (ApigeeAppIdentification*) appIdentification
-                      dataClient: (ApigeeDataClient*) dataClient
                   crashReporting: (BOOL) crashReportingEnabled
            interceptNetworkCalls: (BOOL) autoInterceptCalls
                   uploadListener: (id<ApigeeUploadListener>)uploadListener __attribute__ ((deprecated));

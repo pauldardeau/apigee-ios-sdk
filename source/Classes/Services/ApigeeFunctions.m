@@ -479,35 +479,35 @@ void Apigee_record_event(const char *tag,
 */
 
 /*********************  network connectivity status  **************************/
-int Apigee_connected()
-{
-    ApigeeActiveSettings *activeSettings = Apigee_active_settings();
-    if (activeSettings && (activeSettings.activeNetworkStatus != Apigee_NotReachable)) {
-        return 1;
-    }
-    
-    return 0;
-}
-
-int Apigee_connected_via_wifi()
-{
-    ApigeeActiveSettings *activeSettings = Apigee_active_settings();
-    if (activeSettings && (activeSettings.activeNetworkStatus == Apigee_ReachableViaWiFi)) {
-        return 1;
-    }
-    
-    return 0;
-}
-
-int Apigee_connected_via_mobile()
-{
-    ApigeeActiveSettings *activeSettings = Apigee_active_settings();
-    if (activeSettings && (activeSettings.activeNetworkStatus == Apigee_ReachableViaWWAN)) {
-        return 1;
-    }
-    
-    return 0;
-}
+//int Apigee_connected()
+//{
+//    ApigeeActiveSettings *activeSettings = Apigee_active_settings();
+//    if (activeSettings && (activeSettings.activeNetworkStatus != Apigee_NotReachable)) {
+//        return 1;
+//    }
+//    
+//    return 0;
+//}
+//
+//int Apigee_connected_via_wifi()
+//{
+//    ApigeeActiveSettings *activeSettings = Apigee_active_settings();
+//    if (activeSettings && (activeSettings.activeNetworkStatus == Apigee_ReachableViaWiFi)) {
+//        return 1;
+//    }
+//    
+//    return 0;
+//}
+//
+//int Apigee_connected_via_mobile()
+//{
+//    ApigeeActiveSettings *activeSettings = Apigee_active_settings();
+//    if (activeSettings && (activeSettings.activeNetworkStatus == Apigee_ReachableViaWWAN)) {
+//        return 1;
+//    }
+//    
+//    return 0;
+//}
 
 
 /***********************  custom config parameters  ***************************/
