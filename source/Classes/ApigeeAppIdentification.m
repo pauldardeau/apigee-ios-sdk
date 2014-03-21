@@ -6,7 +6,6 @@
 //
 
 #import "ApigeeAppIdentification.h"
-//#import "ApigeeDataClient.h"
 
 static NSString* kDefaultBaseURL = @"https://api.usergrid.com";
 
@@ -26,7 +25,7 @@ static NSString* kDefaultBaseURL = @"https://api.usergrid.com";
     if( self ) {
         self.organizationId = theOrganizationId;
         self.applicationId = theApplicationId;
-        self.baseURL = kDefaultBaseURL; //[ApigeeDataClient defaultBaseURL];
+        self.baseURL = kDefaultBaseURL;
     }
     
     return self;
@@ -39,7 +38,7 @@ static NSString* kDefaultBaseURL = @"https://api.usergrid.com";
     if( self ) {
         self.organizationUUID = theOrganizationUUID;
         self.applicationUUID = theApplicationUUID;
-        self.baseURL = kDefaultBaseURL; //[ApigeeDataClient defaultBaseURL];
+        self.baseURL = kDefaultBaseURL;
     }
     
     return self;

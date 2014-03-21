@@ -5,7 +5,6 @@
 //  Copyright (c) 2012 Apigee. All rights reserved.
 //
 
-//#import "ApigeeReachability.h"
 #import "ApigeeCompositeConfiguration.h"
 
 /*!
@@ -59,7 +58,6 @@ typedef enum {
 
 @property (readonly, nonatomic) ApigeeActiveConfiguration activeConfiguration;
 @property (readonly, nonatomic) NSString * activeConfigurationName;
-//@property (assign, nonatomic) ApigeeNetworkStatus activeNetworkStatus;
 
 @property (readonly, nonatomic) NSString *settingsDescription;
 @property (readonly, nonatomic) NSDate *settingsLastModifiedDate;

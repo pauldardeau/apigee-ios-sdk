@@ -18,7 +18,6 @@
 #import "NSString+UUID.h"
 #import "NSDate+Apigee.h"
 #import "ApigeeSystemLogger.h"
-//#import "ApigeeReachability.h"
 #import "ApigeeOpenUDID.h"
 
 #import "ApigeeSystemLogger.h"
@@ -36,7 +35,6 @@
 
 #import "ApigeeQueue+NetworkMetrics.h"
 #import "ApigeeCachedConfigUtil.h"
-//#import "ApigeeLocationService.h"
 #import "ApigeeLogCompiler.h"
 #import "ApigeeSessionMetricsCompiler.h"
 #import "ApigeeMonitoringClient.h"
@@ -48,25 +46,18 @@
 #import "ApigeeCustomConfigParam.h"
 
 #import "ApigeeAppIdentification.h"
-//#import "ApigeeDataClient.h"
 #import "ApigeeClient.h"
 #import "ApigeeJsonUtils.h"
 
 #import "ApigeeNSURLSessionSupport.h"
 #import "ApigeeNSURLSessionDataTaskInfo.h"
 
-//#import "ApigeeUIEventManager.h"
-//#import "ApigeeUIEventScreenVisibility.h"
-//#import "ApigeeUIEventButtonPress.h"
-//#import "ApigeeUIEventSegmentSelected.h"
-//#import "ApigeeUIEventSwitchToggled.h"
 #import "NSURLConnection+Apigee.h"
 
 
 
 static ApigeeMonitoringClient *singletonInstance = nil;
 
-//static const BOOL kDefaultUploadCrashReports    = YES;
 static const BOOL kDefaultInterceptNetworkCalls = YES;
 
 static NSString* kApigeeMonitoringClientTag = @"MOBILE_AGENT";
@@ -102,8 +93,6 @@ static bool AmIBeingDebugged(void)
 
 @property (strong) NSString *appName;
 
-//@property (strong) ApigeeReachability *reachability;
-
 @property (assign) aslclient client;
 
 @property (strong) ApigeeIntervalTimer* timer;
@@ -127,7 +116,6 @@ static bool AmIBeingDebugged(void)
 @property (strong) NSMutableArray *listListeners;
 
 @property (strong) ApigeeAppIdentification *appIdentification;
-//@property (strong) ApigeeDataClient *dataClient;
 
 @property (strong) NSMutableDictionary *dictRegisteredDataTasks;
 @property (strong) NSRecursiveLock *lockDataTasks;
@@ -142,8 +130,6 @@ static bool AmIBeingDebugged(void)
 @property (assign) BOOL locationServicesStarted;
 @property (copy, nonatomic) NSString* customUploadUrl;
 @property (assign, nonatomic) BOOL alwaysUploadCrashReports;
-
-//@property (assign, nonatomic) ApigeeNetworkStatus activeNetworkStatus;
 
 
 - (void) retrieveCachedConfig;
@@ -162,8 +148,6 @@ static bool AmIBeingDebugged(void)
 
 @synthesize appName;
 
-//@synthesize reachability;
-
 @synthesize client;
 @synthesize timer;
 
@@ -178,7 +162,6 @@ static bool AmIBeingDebugged(void)
 @synthesize lastNetworkTransmissionTime;
 
 @synthesize appIdentification;
-//@synthesize dataClient;
 
 @synthesize autoPromoteLoggedErrors;
 @synthesize crashReportingEnabled;
@@ -188,40 +171,13 @@ static bool AmIBeingDebugged(void)
 @synthesize crashReporterInitialized;
 @synthesize monitoringPaused;
 @synthesize locationServicesStarted;
-//@synthesize activeNetworkStatus;
 @synthesize alwaysUploadCrashReports;
 
-// this method is sometimes handy for debugging
-- (void)log:(NSString*)data toFile:(NSString*)fileName
-{
-#if TARGET_IPHONE_SIMULATOR
-    NSString* fullFileName = [NSString stringWithFormat:@"/Users/ApigeeCorporation/%@", fileName];
-    FILE* f = fopen([fullFileName UTF8String],"a+");
-    if( f != NULL )
-    {
-        time_t lt = time(NULL);
-        struct tm* ptr = localtime(&lt);
-        
-        NSString* appIdString = [NSString stringWithFormat:@"App: %d (%@/%@)",
-                                 [self.activeSettings.instaOpsApplicationId intValue],
-                                 self.activeSettings.orgName,
-                                 self.activeSettings.appName];
-        
-        fprintf(f,"%s\n", [appIdString UTF8String]);
-        fprintf(f,"Time: %s\n", asctime(ptr));
-        
-        fprintf(f,"%s\n", [data UTF8String]);
-        fprintf(f,"=======================================================\n");
-        fclose(f);
-    }
-#endif
-}
 
 + (NSString*)sdkVersion
 {
     return [ApigeeClient sdkVersion];
 }
-
 
 #pragma mark - Initialization and clean up
 
@@ -230,14 +186,6 @@ static bool AmIBeingDebugged(void)
     // only returns non-nil pointer if it's been already created
     return singletonInstance;
 }
-
-//- (void)checkReachability
-//{
-//    self.activeNetworkStatus = [self.reachability currentReachabilityStatus];
-//    if (self.activeSettings) {
-//        self.activeSettings.activeNetworkStatus = self.activeNetworkStatus;
-//    }
-//}
 
 - (BOOL)isAbleToSendDataToServer
 {
@@ -255,10 +203,6 @@ static bool AmIBeingDebugged(void)
     singletonInstance = nil;
     NSNotificationCenter *notifyCenter = [NSNotificationCenter defaultCenter];
     
-//    [notifyCenter removeObserver:self
-//                         name:kReachabilityChangedNotification
-//                       object:nil];
-   
     [notifyCenter removeObserver:self
                          name:UIApplicationDidEnterBackgroundNotification
                        object:nil];
@@ -285,14 +229,12 @@ static bool AmIBeingDebugged(void)
 }
 
 - (id) initWithAppIdentification: (ApigeeAppIdentification*) theAppIdentification
-//                      dataClient: (ApigeeDataClient*) theDataClient
 {
     return [self initWithAppIdentification:theAppIdentification
                                    options:nil];
 }
 
 - (id) initWithAppIdentification:(ApigeeAppIdentification*)theAppIdentification
-//                      dataClient:(ApigeeDataClient*)theDataClient
                   crashReporting: (BOOL) isCrashReportingEnabled
            interceptNetworkCalls: (BOOL) autoInterceptCalls
                   uploadListener: (id<ApigeeUploadListener>)uploadListener
@@ -366,8 +308,7 @@ static bool AmIBeingDebugged(void)
     }
     
     self.appIdentification = theAppIdentification;
-    //self.dataClient = theDataClient;
-    
+   
     self.isActive = NO;
     self.isInitialized = NO;
     self.monitoringPaused = NO;
@@ -408,21 +349,7 @@ static bool AmIBeingDebugged(void)
     
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
     
-//    if (performAutomaticUIEventTracking) {
-//        ApigeeUIEventManager* uiEventManager = [ApigeeUIEventManager sharedInstance];
-//        [uiEventManager setUpApigeeSwizzling];
-//        [uiEventManager addUIEventListener:self];
-//    }
-   
-//    self.reachability = [ApigeeReachability reachabilityForInternetConnection];
-//    [self.reachability startNotifier];
-//    [self checkReachability];
-   
     NSNotificationCenter *notifyCenter = [NSNotificationCenter defaultCenter];
-//    [notifyCenter addObserver:self
-//                     selector:@selector(networkChanged:)
-//                         name:kReachabilityChangedNotification
-//                       object:nil];
    
     [notifyCenter addObserver:self
                      selector:@selector(applicationDidEnterBackground:)
@@ -710,13 +637,6 @@ static bool AmIBeingDebugged(void)
         // earlier monitoring
         [self cancelTimer];
         
-//#if !(TARGET_IPHONE_SIMULATOR)
-//        if (self.activeSettings.locationCaptureEnabled && self.locationServicesStarted) {
-//            [[ApigeeLocationService defaultService] stopScan];
-//            self.locationServicesStarted = NO;
-//        }
-//#endif
-       
         if ([self isMonitoringDisabled]) {
             SystemDebug(@"IO_Diagnostics",@"Monitoring disabled");
             return;
@@ -767,15 +687,6 @@ static bool AmIBeingDebugged(void)
                 } else {
                     [self establishTimer];
                 }
-
-// location capture is only available on real device
-//#if !(TARGET_IPHONE_SIMULATOR)
-//                if (self.activeSettings.locationCaptureEnabled) {
-//                    self.locationServicesStarted = YES;
-//                    [[ApigeeLocationService defaultService] startScan];
-//                }
-//#endif
-               
             }
         }
         
@@ -1167,23 +1078,6 @@ static bool AmIBeingDebugged(void)
             return NO;
         }
         
-        //[self checkReachability];
-        //ApigeeNetworkStatus netStatus = self.activeNetworkStatus;
-        
-        // do we have network connectivity?
-//        if (Apigee_NotReachable == netStatus) {
-//            ApigeeLogVerboseMessage(kApigeeMonitoringClientTag, @"Cannot upload events -- no network connectivity");
-//            return NO;  // no connectivity, can't upload
-//        }
-
-        // not on WiFi?
-//        if (netStatus != Apigee_ReachableViaWiFi) {
-//            // should we not upload when mobile (not on wifi)?
-//            if (!self.activeSettings.enableUploadWhenMobile) {
-//                ApigeeLogVerboseMessage(kApigeeMonitoringClientTag, @"Cannot upload events -- upload when on mobile network disallowed");
-//                return NO;
-//            }
-//        }
        
         NSArray *logEntries = [[ApigeeLogCompiler systemCompiler] compileLogsForSettings:self.activeSettings
                                autoPromoteErrors:self.autoPromoteLoggedErrors];
@@ -1213,21 +1107,14 @@ static bool AmIBeingDebugged(void)
         }
 
         NSError* error = nil;
-
         NSArray* networkMetricsList = [ApigeeNetworkEntry toDictionaries:networkMetrics];
-        
-        //NSString* jsonNetworkMetrics = [ApigeeJsonUtils encode:networkMetricsList error:&error];
-        //ApigeeLogVerboseMessage(@"DEBUG", jsonNetworkMetrics);
-        
-        
+       
         [clientMetricsEnvelope setObject:[ApigeeLogEntry toDictionaries:logEntries] forKey:@"logs"];
         [clientMetricsEnvelope setObject:networkMetricsList forKey:@"metrics"];
         [clientMetricsEnvelope setObject:[sessionMetrics asDictionary] forKey:@"sessionMetrics"];
     
         NSString *json = [ApigeeJsonUtils encode:clientMetricsEnvelope error:&error];
-        
-        //ApigeeLogVerboseMessage(@"DEBUG",json);
-        
+       
         if( json != nil ) {
             BOOL reachedServerSuccessfully = NO;
             
@@ -1872,38 +1759,6 @@ static bool AmIBeingDebugged(void)
             [self.lockDataTasks unlock];
         }
     }
-}
-
-#pragma mark UI Event Tracking
-
-//- (void)logUIEvent:(NSString*)uiEvent
-//{
-//    [ApigeeLogger infoFrom:NULL tag:@"UI_EVENT" message:uiEvent];
-//}
-//
-//- (void)screenVisibilityChanged:(ApigeeUIEventScreenVisibility*)screenEvent
-//{
-//    [self logUIEvent:[screenEvent trackingEntry]];
-//}
-//
-//- (void)buttonPressed:(ApigeeUIEventButtonPress*)buttonPressEvent
-//{
-//    [self logUIEvent:[buttonPressEvent trackingEntry]];
-//}
-//
-//- (void)switchToggled:(ApigeeUIEventSwitchToggled*)switchToggledEvent
-//{
-//    [self logUIEvent:[switchToggledEvent trackingEntry]];
-//}
-//
-//- (void)segmentSelected:(ApigeeUIEventSegmentSelected*)segmentSelectedEvent
-//{
-//    [self logUIEvent:[segmentSelectedEvent trackingEntry]];
-//}
-
-- (BOOL)invokeOnMainThread
-{
-    return NO;
 }
 
 @end

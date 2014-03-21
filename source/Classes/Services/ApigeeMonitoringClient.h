@@ -6,10 +6,8 @@
 
 #import "ApigeeActiveSettings.h"
 #import "ApigeeUploadListener.h"
-//#import "ApigeeUIEventListener.h"
 
 @class ApigeeAppIdentification;
-//@class ApigeeDataClient;
 @class ApigeeMonitoringOptions;
 @class ApigeeNSURLSessionDataTaskInfo;
 @class ApigeeNetworkEntry;

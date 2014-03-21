@@ -8,7 +8,6 @@
 #import <Foundation/Foundation.h>
 
 @class ApigeeAppIdentification;
-//@class ApigeeDataClient;
 @class ApigeeMonitoringClient;
 @class ApigeeMonitoringOptions;
 
@@ -86,13 +85,6 @@
                      baseURL:(NSString*)baseURL
                      options:(ApigeeMonitoringOptions*)monitoringOptions;
 
-
-/*!
- @abstract Retrieves the Apigee data client (Usergrid)
- @see ApigeeDataClient ApigeeDataClient
- @return the ApigeeDataClient instance that was initialized
- */
-//- (ApigeeDataClient*)dataClient;
 
 /*!
  @abstract Retrieves the Apigee app monitoring client

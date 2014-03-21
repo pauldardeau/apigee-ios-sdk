@@ -7,7 +7,6 @@
 
 #import "ApigeeClient.h"
 #import "ApigeeAppIdentification.h"
-//#import "ApigeeDataClient.h"
 #import "ApigeeMonitoringClient.h"
 #import "ApigeeMonitoringOptions.h"
 #import "ApigeeDefaultiOSLog.h"
@@ -20,7 +19,6 @@ static NSString* kSDKVersion = @"2.0.10.c";
 
 @interface ApigeeClient ()
 
-//@property (strong, nonatomic) ApigeeDataClient* dataClient;
 @property (strong, nonatomic) ApigeeMonitoringClient* monitoringClient;
 @property (strong, nonatomic) ApigeeAppIdentification* appIdentification;
 
@@ -29,7 +27,6 @@ static NSString* kSDKVersion = @"2.0.10.c";
 
 @implementation ApigeeClient
 
-//@synthesize dataClient;
 @synthesize monitoringClient;
 @synthesize appIdentification;
 
@@ -109,39 +106,26 @@ static NSString* kSDKVersion = @"2.0.10.c";
         }
         
 
-//        self.dataClient = [[ApigeeDataClient alloc] initWithOrganizationId:organizationId
-//                                                             withApplicationID:applicationId
-//                                                                       baseURL:baseURL
-//                                                                       urlTerms:urlTerms];
-//        
-//        if( self.dataClient ) {
-//            NSLog( @"apigee: dataClient created" );
-       
-            if( monitoringOptions != nil ) {
-                if( monitoringOptions.monitoringEnabled ) {
-                    self.monitoringClient = [[ApigeeMonitoringClient alloc] initWithAppIdentification:self.appIdentification
-                                                                                          options:monitoringOptions];
-                } else {
-                    self.monitoringClient = nil;
-                }
-            } else {
+        if( monitoringOptions != nil ) {
+            if( monitoringOptions.monitoringEnabled ) {
                 self.monitoringClient =
-                    [[ApigeeMonitoringClient alloc] initWithAppIdentification:self.appIdentification];
-            }
-            
-            if( self.monitoringClient ) {
-                NSLog( @"apigee: monitoringClient created" );
+                    [[ApigeeMonitoringClient alloc] initWithAppIdentification:self.appIdentification
+                                                                      options:monitoringOptions];
             } else {
-                if (monitoringOptions && monitoringOptions.monitoringEnabled) {
-                    NSLog( @"apigee: unable to create monitoringClient" );
-                }
+                self.monitoringClient = nil;
             }
-//        } else {
-//            NSLog( @"apigee: unable to create dataClient" );
-//            NSLog( @"apigee: no monitoringClient will be created" );
-//        }
-       
-        //[ApigeeDataClient setLogger:[[ApigeeDefaultiOSLog alloc] init]];
+        } else {
+            self.monitoringClient =
+                [[ApigeeMonitoringClient alloc] initWithAppIdentification:self.appIdentification];
+        }
+            
+        if( self.monitoringClient ) {
+            NSLog( @"apigee: monitoringClient created" );
+        } else {
+            if (monitoringOptions && monitoringOptions.monitoringEnabled) {
+                NSLog( @"apigee: unable to create monitoringClient" );
+            }
+        }
     }
     
     return self;

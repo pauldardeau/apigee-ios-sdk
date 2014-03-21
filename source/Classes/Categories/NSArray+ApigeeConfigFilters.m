@@ -28,21 +28,6 @@
     return [self applyFilter:kApigeeConfigFilterTypeDevicePlatform on:platform];
 }
 
-//- (BOOL) containsNetworkSpeed:(ApigeeNetworkStatus) status
-//{
-//    if ([self count] == 0) {
-//        return YES;
-//    }
-//    
-//    if (status == Apigee_ReachableViaWiFi) {
-//        return [self containsWifiNetworkStatus];
-//    } else if (status == Apigee_ReachableViaWWAN){
-//        return [self containsWWANNetworkStatus];
-//    } else {
-//        return NO;
-//    }
-//}
-
 - (BOOL) containsCarrier:(NSString *) carrier
 {
     return [self applyFilter:kApigeeConfigFilterTypeCarrier on:carrier];
