@@ -9,7 +9,6 @@
 #import "ApigeeAppIdentification.h"
 #import "ApigeeMonitoringClient.h"
 #import "ApigeeMonitoringOptions.h"
-#import "ApigeeDefaultiOSLog.h"
 
 /*!
  @version 2.0.10

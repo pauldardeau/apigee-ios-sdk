@@ -48,8 +48,9 @@ FRAMEWORKNAME="ApigeeiOSSDK"
 #configuration
 SDKS="iphoneos iphonesimulator"
 
-#CONFIGURATION="Debug Release" uncomment if you want debug configurations built
-CONFIGURATION="Release"
+#uncomment if you want debug configurations built
+CONFIGURATION="Debug Release" 
+#CONFIGURATION="Release"
 
 #clean before creating new distribution
 rm -rf build/dist
