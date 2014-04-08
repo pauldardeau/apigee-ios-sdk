@@ -702,3 +702,11 @@ static const char *plcrash_async_thread_state_get_regname_64 (apigee_plcrash_reg
 }
 
 #endif /* defined(__i386__) || defined(__x86_64__) */
+
+/*
+ To keep the linker from complaining about no symbols
+ */
+void DummyApigeePLCrashAsyncThread_x86EmptyFunction() {
+   
+}
+

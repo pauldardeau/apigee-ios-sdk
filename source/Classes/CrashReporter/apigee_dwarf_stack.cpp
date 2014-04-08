@@ -42,3 +42,10 @@
  */
 
 #endif /* PLCRASH_FEATURE_UNWIND_DWARF */
+
+/*
+ To keep the linker from complaining about no symbols
+ */
+void DummyApigeeDwarfStackEmptyFunction() {
+   
+}

@@ -754,3 +754,11 @@ bool apigee_plcrash_async_thread_state_map_dwarf_to_reg (const apigee_plcrash_as
 }
 
 #endif /* __arm__ || __arm64__ */
+
+/*
+ To keep the linker from complaining about no symbols
+ */
+void DummyApigeePLCrashAsyncThread_armEmptyFunction() {
+   
+}
+

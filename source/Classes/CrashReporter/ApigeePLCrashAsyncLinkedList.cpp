@@ -27,3 +27,10 @@
  */
 
 #include "ApigeePLCrashAsyncLinkedList.hpp"
+
+/*
+ To keep the linker from complaining about no symbols
+ */
+void DummyApigeePLCrashAsyncLinkedListEmptyFunction() {
+   
+}
